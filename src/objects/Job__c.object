@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>EditJob</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>EditJob</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>EditJob</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>A batchable Job for Relax to asynchronously execute on a given schedule.</description>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Apex_Class__c</fullName>
+        <description>The name of the Batchable Apex class to execute.</description>
+        <externalId>false</externalId>
+        <label>Apex Class</label>
+        <length>100</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AsyncApexJobId__c</fullName>
+        <description>The Id of the AsyncApexJob, if any, which is currently executing for this Job.</description>
+        <externalId>false</externalId>
+        <label>Current Apex Job Id</label>
+        <length>18</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CronTriggerId__c</fullName>
+        <description>The Id of the CronTrigger Job, if any, currently executing this Job.</description>
+        <externalId>false</externalId>
+        <label>Current Scheduled Job Id</label>
+        <length>18</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cron_Schedule__c</fullName>
+        <description>For Jobs that need to be Run Individually, a CRON schedule dictating when the Job should be run must be provided.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For Jobs that need to be Run Individually, a CRON schedule dictating when the Job should be run must be provided.</inlineHelpText>
+        <label>Cron Schedule</label>
+        <length>120</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delete_Job_After_Run__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used in conjunction with &quot;Only Run Once&quot;. If checked, this Job will be deleted after it is first run.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used in conjunction with &quot;Only Run Once&quot;. If checked, this Job will be deleted after it is first run.</inlineHelpText>
+        <label>Delete Job After Run</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>IsActive__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Only active Jobs will be considered by the Nexus scheduler.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Only active Jobs will be considered by the Nexus scheduler.</inlineHelpText>
+        <label>Active?</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>JobSchedulerId__c</fullName>
+        <description>The Id of the currently-scheduled Relax Job Scheduler process</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Id of the currently-scheduled Nexus Job Scheduler process</inlineHelpText>
+        <label>Job Scheduler Id</label>
+        <length>18</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Run__c</fullName>
+        <description>The last time that this Job was run</description>
+        <externalId>false</externalId>
+        <label>Last Run</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Next_Run__c</fullName>
+        <description>The next time that this Job should be run.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The next time that this Job should be run.</inlineHelpText>
+        <label>Next Run</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Only_Run_Once__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked, then this Job will only be run once, at which point it will be made in-active.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, then this Job will only be run once, at which point it will be made in-active.</inlineHelpText>
+        <label>Only Run Once</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <description>Used for sequencing piggybacked jobs</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If this Job runs at the same time as another, Order determines which Job will execute when.</inlineHelpText>
+        <label>Order</label>
+        <precision>9</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Run_Increment__c</fullName>
+        <defaultValue>1</defaultValue>
+        <externalId>false</externalId>
+        <label>Run Increment</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Run_Individually__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If true, a dedicated Scheduled Apex Job will be allocated to this Job. Otherwise, Nexus will attempt to piggyback this Job onto others.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If true, a dedicated Scheduled Apex Job will be allocated to this Job. Otherwise, Nexus will attempt to piggyback this Job onto others.</inlineHelpText>
+        <label>Run Individually</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Run_Units__c</fullName>
+        <externalId>false</externalId>
+        <label>Run Units</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Minutes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hours</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Days</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Weeks</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Months</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Queued</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Failed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <label>Job</label>
+    <listViews>
+        <fullName>All_Jobs</fullName>
+        <columns>NAME</columns>
+        <columns>Apex_Class__c</columns>
+        <columns>IsActive__c</columns>
+        <columns>Run_Individually__c</columns>
+        <columns>Order__c</columns>
+        <columns>Status__c</columns>
+        <columns>Last_Run__c</columns>
+        <columns>Next_Run__c</columns>
+        <columns>JobSchedulerId__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Jobs</label>
+    </listViews>
+    <nameField>
+        <label>Job Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Jobs</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Apex_Class__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Run_Increment__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Run_Units__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Last_Run__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>AsyncApexJobId__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CronTriggerId__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATEDBY_USER</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Apex_Class__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Run_Increment__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Run_Units__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Last_Run__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CREATEDBY_USER</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Apex_Class__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Run_Increment__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Run_Units__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Individual_Jobs_Require_CRON_Schedule</fullName>
+        <active>true</active>
+        <description>Any Job with Run Individually set to true must have a valid CRON Schedule specified.</description>
+        <errorConditionFormula>AND(
+Run_Individually__c,
+ISBLANK(Cron_Schedule__c)
+)</errorConditionFormula>
+        <errorDisplayField>Cron_Schedule__c</errorDisplayField>
+        <errorMessage>A valid CRON Schedule must be specified for a Job to be run individually.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Next_Run_After_Last_Run</fullName>
+        <active>true</active>
+        <description>You cannot update Next Run to be before Last Run</description>
+        <errorConditionFormula>AND(
+NOT(ISBLANK(Last_Run__c)),
+NOT(ISBLANK(Next_Run__c)),
+OR(ISCHANGED(Next_Run__c),ISCHANGED(Last_Run__c)),
+Next_Run__c &lt;= Last_Run__c
+)</errorConditionFormula>
+        <errorMessage>Next Run must be after Last Run.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Only_Run_Once_Requirements</fullName>
+        <active>true</active>
+        <description>For a Job to be Active and only run once, it must have a non-null Next Run.</description>
+        <errorConditionFormula>AND(
+IsActive__c,
+Only_Run_Once__c,
+ISBLANK(Next_Run__c)
+)</errorConditionFormula>
+        <errorDisplayField>Next_Run__c</errorDisplayField>
+        <errorMessage>For a Job to be Active and only set to run once, the job&apos;s Next Run time must be non-null.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Run_Increment_Greater_or_Equal_to_1</fullName>
+        <active>true</active>
+        <description>Run Increment must be greater than or equal to 1</description>
+        <errorConditionFormula>AND(
+NOT(Run_Individually__c),
+OR(
+ISBLANK(Run_Increment__c),
+Run_Increment__c &lt; 1
+)
+)</errorConditionFormula>
+        <errorDisplayField>Run_Increment__c</errorDisplayField>
+        <errorMessage>Run Increment must be at least 1.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Run_Increment_Required_for_Chainable_Job</fullName>
+        <active>true</active>
+        <description>For a Job to be chained, Run Increment and Run Units are required.</description>
+        <errorConditionFormula>AND(
+NOT(Run_Individually__c),
+NOT(Only_Run_Once__c),
+OR(ISBLANK(Run_Increment__c),ISBLANK(TEXT(Run_Units__c)))
+)</errorConditionFormula>
+        <errorMessage>For a Job to be chained (i.e. not run individually), a valid Run Increment and Run Units must be specified.</errorMessage>
+    </validationRules>
+</CustomObject>
