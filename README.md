@@ -8,7 +8,7 @@ What is it?
 
 For a comprehensive overview of Relax, check out this blog post:
 
-    (Relax: Your Batch Scheduling Woes are Over)[http://zachelrath.wordpress.com/2012/06/28/relax-your-batch-scheduling-woes-are-over/]
+(Relax: Your Batch Scheduling Woes are Over)[http://zachelrath.wordpress.com/2012/06/28/relax-your-batch-scheduling-woes-are-over/]
     
 We'll be migrating some of this info over to the README page soon. If you'd like to help perform this migration, feel free :)
 
@@ -18,7 +18,7 @@ Installation
 
 Latest versions:
 
-    (Beta 4) https://login.salesforce.com/packaging/installPackage.apexp?p0=04tE0000000HWiT
+(Beta 4)[https://login.salesforce.com/packaging/installPackage.apexp?p0=04tE0000000HWiT]
 
 
 Unit Tests
