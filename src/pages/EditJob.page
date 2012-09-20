@@ -66,16 +66,16 @@
         
     </apex:form>
     
-    <apex:pageBlock title="Job Status" rendered="{!AND(Job__c.IsActive__c,NOT(ISBLANK(Job__c.NexusJobSchedulerId__c)))}" id="jobStatus">
+    <apex:pageBlock title="Job Status" rendered="{!AND(Job__c.IsActive__c,NOT(ISBLANK(Job__c.JobSchedulerId__c)))}" id="jobStatus">
     	<apex:pageBlockSection showHeader="false" columns="2" rendered="{!Job__c.Run_Individually__c}">
-    		<apex:outputField value="{!Job__c.NexusJobSchedulerId__c}"/>
+    		<apex:outputField value="{!Job__c.JobSchedulerId__c}"/>
     		<apex:outputField value="{!Job__c.Last_Run__c}"/>
     		<apex:outputField value="{!Job__c.CronTriggerId__c}"/>
         	<apex:outputField value="{!Job__c.Next_Run__c}"/>
         	<apex:outputField value="{!Job__c.AsyncApexJobId__c}"/>
         </apex:pageBlockSection>
         <apex:pageBlockSection showHeader="false" columns="2" rendered="{!NOT(Job__c.Run_Individually__c)}">
-    		<apex:outputField value="{!Job__c.NexusJobSchedulerId__c}"/>
+    		<apex:outputField value="{!Job__c.JobSchedulerId__c}"/>
     		<apex:outputField value="{!Job__c.Last_Run__c}"/>
     		<apex:outputField value="{!Job__c.AsyncApexJobId__c}"/>
         	<apex:outputField value="{!Job__c.Next_Run__c}"/>

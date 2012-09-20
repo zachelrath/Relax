@@ -1,3 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Scheduler_Could_Not_Be_Run</fullName>
+        <categories>error, scheduler, run</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Scheduler Could Not Be Run</shortDescription>
+        <value>The Relax Job Scheduler could not be run: {0}</value>
+    </labels>
+</CustomLabels>
