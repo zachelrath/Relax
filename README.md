@@ -86,4 +86,4 @@ Contributing
 Licensing
 ------------
 
-Relax is distributed under the Apache 2.0 License -- see LICENSE.txt for details. 
+Relax is distributed under the GNU General Public License v3 -- see LICENSE.md for details. If you want to use Relax or a modified version of it in your own organization, that is okay, but code from Relax may not be redistributed or sold for profit in another product. 
