@@ -28,7 +28,9 @@ Here's what CaseEscalator looks like:
 				select	Priority
 				from	Case 
 				where	Status = 'New'
-				and		Priority not in ('High','Critical')
+				and		Priority not in ('High','Critic
+				
+				al')
 				and		Account.relax__SLA__c in ('Platinum','Gold') 
 				and		AccountId != null
 				and		CreatedDate < :Date.today().addDays(-2) 
@@ -80,3 +82,8 @@ Contributing
 3. Commit your changes (`git commit -am "Modified batch scheduling engine."`)
 4. Push to the branch (`git push origin my_markup`)
 5. Open a [Pull Request][1]
+
+Licensing
+------------
+
+Relax is distributed under the Apache 2.0 License -- see LICENSE.txt for details. 
