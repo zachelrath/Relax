@@ -1,4 +1,4 @@
-global class InsertChatterPosts extends BatchableProcessStep {
+public class InsertChatterPosts extends BatchableProcessStep {
 
 	// Find all Accounts with the 'Insert Post' flag set,
 	// and insert a chatter post with CreatedById set to Zach McElrath
@@ -7,12 +7,12 @@ global class InsertChatterPosts extends BatchableProcessStep {
 
 	private User zach;
 
-	global override Database.Querylocator start(Database.BatchableContext btx) {
+	public override Database.Querylocator start(Database.BatchableContext btx) {
 		this.zach = [select Id from User where Name = 'Zach McElrath' limit 1];
 		return Database.getQueryLocator([select Name, Insert_Chatter_Post__c, SLA__c from Account where Insert_Chatter_Post__c = true]);
 	}
 	
-	global override void execute(Database.BatchableContext btx, List<SObject> scope) {
+	public override void execute(Database.BatchableContext btx, List<SObject> scope) {
 		List<Account> accs = (List<Account>) scope;
 		List<FeedItem> items = new List<FeedItem>();
 		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
@@ -51,7 +51,7 @@ global class InsertChatterPosts extends BatchableProcessStep {
 		}
 	}
 	
-	global override void finish(Database.BatchableContext btx) {
+	public override void finish(Database.BatchableContext btx) {
 		
 		// Complete this ProcessStep
 		complete();

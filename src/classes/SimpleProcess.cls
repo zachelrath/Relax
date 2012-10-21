@@ -69,28 +69,33 @@ global virtual class SimpleProcess implements Process {
 			// If anything goes wrong,
 			// we MUST keep the process going
 			try {
-				// If we are in BATCH APEX,
-				// then postpone our process execution into a different context
-				if (System.isBatch()) { 
+				// If we are in BATCH APEX...
+				//if (System.isBatch()) { 
 					
+					// PRE WINTER 13 version --- had to postpone to another execution context  
 					//System.debug('*** Starting Relax process balloon');
 					
-					Datetime later = Datetime.now().addSeconds(5);
+					// then postpone our process execution into a different context
+					//Datetime later = Datetime.now().addSeconds(5);
 					
-					ProcessBalloon balloon = new ProcessBalloon(this);
-					balloonId = System.schedule('Relax Process Balloon '+later.getTime(),JobScheduler.GetCRONExpression(later),balloon);
+					//ProcessBalloon balloon = new ProcessBalloon(this);
+					//balloonId = System.schedule('Relax Process Balloon '+later.getTime(),JobScheduler.GetCRONExpression(later),balloon);
 					
 					//System.debug('*** process balloon has been scheduled. balloonId: ' + balloonId);
 					
-				} 
-				// Otherwise, we should be free to run any other Runnable
-				else {
+				//} 
+				// With Winter 13,
+				// as long as our Batch Apex class is in API v26,
+				// we can run ANY runnable, including BatchableRunnables,
+				// because Database.executeBatch() can now be called
+				// from the finish() method of a Batch Apex class
+				//else {
 					r = runnables.get(index++);
 					// Let our runnable know which process is running it
 					r.setProcess(this);
 					// Run it!
 					r.run();
-				}
+				//}
 			} catch (Exception ex) {
 				
 				// Email system admin

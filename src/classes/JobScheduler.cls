@@ -63,7 +63,7 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
 		this.tempTriggerIds = tempTriggerIds;
 	}
 	
-	global Database.QueryLocator start(Database.BatchableContext bc) {		
+	public Database.QueryLocator start(Database.BatchableContext bc) {		
 		
 		// Set our static flag to avoid running future methods from within a batch context
 		IsBatch = true;
@@ -109,11 +109,12 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
 			select Id from Job__c where IsActive__c = true limit 1
 		];
 		// If there are NO active jobs,
-		// then we do not want this process to continue at all. 
+		// then we do not want this process to continue at all.
+		// Rather, we just want to run ourself again in 30 seconds  
 		if (!activeJobs.isEmpty()) {
-			// Schedule ourself to run again in 5 minutes
+			// Schedule ourself to run again in 30 seconds
 			try {
-				Datetime timeout = Datetime.now().addMinutes(5);
+				Datetime timeout = Datetime.now().addSeconds(30);
 				this.scheduler = new JobScheduler();
 	            this.newTriggerId = System.schedule(
 	            	'Relax Job Scheduler ' + timeout.getTime(),
@@ -141,7 +142,7 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
         ]);
 	}
 	
-	global void execute(Database.BatchableContext bc, List<SObject> scope) {
+	public void execute(Database.BatchableContext bc, List<SObject> scope) {
 		
 		// Reset our static flag
 		IsBatch = true;
@@ -297,7 +298,7 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
 		}
 	}
 	
-	global void finish(Database.BatchableContext bc) {
+	public void finish(Database.BatchableContext bc) {
 		
 		// Reset our static flag
 		IsBatch = true;
@@ -339,7 +340,7 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
 	//
 	// Schedulable interface
 	//
-	global void execute(SchedulableContext ctx) {
+	public void execute(SchedulableContext ctx) {
 		// If we have been handed an Async Process (through the setProcess() method),
 		// then populate this process in our Batch Job
 		Process oldProcess = this.getProcess();
@@ -517,11 +518,11 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
         	if (!jobs.isEmpty()) {
         		JobScheduler = jobs[0].JobSchedulerId__c;
         	} else {
-        		Datetime twoMins = Datetime.now().addMinutes(2);
+        		Datetime thirtySeconds = Datetime.now().addSeconds(30);
         		try {
                     JobScheduler = System.schedule(
-                    	'Relax Job Scheduler ' + twoMins.getTime(),
-                    	GetCRONExpression(twoMins),
+                    	'Relax Job Scheduler ' + thirtySeconds.getTime(),
+                    	GetCRONExpression(thirtySeconds),
                     	new JobScheduler()
                     );
                 } catch (Exception e) { 

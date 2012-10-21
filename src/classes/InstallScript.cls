@@ -1,7 +1,7 @@
-global class InstallScript implements InstallHandler {
+public class InstallScript implements InstallHandler {
 
-    global void onInstall(InstallContext ctx) {
-
+    public void onInstall(InstallContext ctx) {
+		/*
         String username = UserInfo.getUserName();
         String profileId = UserInfo.getProfileId();
         String debugString = 
@@ -20,8 +20,9 @@ global class InstallScript implements InstallHandler {
             'Debug from Relax Install Script in org ' + ctx.organizationId(),
             new List<String>{'zach@skoodat.com','umittal@salesforce.com'}
         );
+        */
     }
-
+	/*
     public static void SendDebugEmail(String htmlBody, String textBody, String subject, List<String> toAddresses) {
         // Send an email to the specified email addresses with a report of how the batch job went
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
@@ -39,6 +40,7 @@ global class InstallScript implements InstallHandler {
             new List<Messaging.SingleEmailMessage>{mail}
         );
     }
+    */
     
     /////////////////
     // UNIT TESTS
@@ -50,6 +52,6 @@ global class InstallScript implements InstallHandler {
         Boolean b = false;
         System.assertEquals(false,b);
         
-        SendDebugEmail('test','test','testsubject',new List<String>{'zach@skoodat.com'});
+        //SendDebugEmail('test','test','testsubject',new List<String>{'zach@skoodat.com'});
     }
 }

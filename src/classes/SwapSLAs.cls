@@ -1,12 +1,12 @@
-global class SwapSLAs extends BatchableProcessStep {
+public class SwapSLAs extends BatchableProcessStep {
 
 	// Swap the SLA's of our Gold and Bronze accounts
 
-	global override Database.Querylocator start(Database.BatchableContext btx) {
+	public override Database.Querylocator start(Database.BatchableContext btx) {
 		return Database.getQueryLocator([select SLA__c from Account where SLA__c in ('Gold','Bronze')]);
 	}
 	
-	global override void execute(Database.BatchableContext btx, List<SObject> scope) {
+	public override void execute(Database.BatchableContext btx, List<SObject> scope) {
 		List<Account> accs = (List<Account>) scope;
 		for (Account a : accs) {
 			if (a.SLA__c == 'Gold') a.SLA__c = 'Bronze';
@@ -15,7 +15,7 @@ global class SwapSLAs extends BatchableProcessStep {
 		update accs;
 	}
 	
-	global override void finish(Database.BatchableContext btx) {
+	public override void finish(Database.BatchableContext btx) {
 		// Complete this ProcessStep
 		complete();
 	}

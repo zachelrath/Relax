@@ -2,7 +2,7 @@
 // Used to keep Nexus processes 'afloat' asynchronously
 //
 
-global class ProcessBalloon implements Schedulable, Database.Stateful {
+public class ProcessBalloon implements Schedulable, Database.Stateful {
 	
 	private Process p;
 
@@ -10,7 +10,7 @@ global class ProcessBalloon implements Schedulable, Database.Stateful {
 		this.p = p;
 	}
 	
-	global void execute(SchedulableContext ctx) {
+	public void execute(SchedulableContext ctx) {
 		// Just in case someone tries to run this class inappropriately
 		// (e.g. using a no-argument constructor)
 		if (p != null) {
