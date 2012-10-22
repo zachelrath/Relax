@@ -20,9 +20,9 @@ There are several sample Batch / Scheduled Apex classes that work with the Relax
 
 Here's what CaseEscalator looks like:
 
-	global class CaseEscalator extends BatchableProcessStep implements Schedulable {
+	public class CaseEscalator extends BatchableProcessStep implements Schedulable {
 	
-		global override Database.Querylocator start(Database.BatchableContext btx) {
+		public override Database.Querylocator start(Database.BatchableContext btx) {
 			// Find all Cases that have been open		
 			return Database.getQueryLocator([
 				select	Priority
@@ -37,7 +37,7 @@ Here's what CaseEscalator looks like:
 			]);
 		}
 	
-		global override void execute(Database.BatchableContext btx, List<SObject> scope) {
+		public override void execute(Database.BatchableContext btx, List<SObject> scope) {
 			List<Case> cases = (List<Case>) scope;
 			for (Case c : cases) {
 				// Set the Priority to 'High'
@@ -46,14 +46,14 @@ Here's what CaseEscalator looks like:
 			update cases;
 		}
 	
-		global override void finish(Database.BatchableContext btx) {
+		public override void finish(Database.BatchableContext btx) {
 	
 			// Continue our Batch Process, if we need to
 			complete();
 		}
 	
 		// Implements Schedulable interface
-		global void execute(SchedulableContext ctx) {
+		public void execute(SchedulableContext ctx) {
 			CaseEscalator b = new CaseEscalator();
 			Database.executeBatch(b);
 		}
