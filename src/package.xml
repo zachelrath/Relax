@@ -5,6 +5,10 @@
         <name>ApexClass</name>
     </types>
     <types>
+        <members>apexClassLookup</members>
+        <name>ApexComponent</name>
+    </types>
+    <types>
         <members>*</members>
         <name>ApexPage</name>
     </types>

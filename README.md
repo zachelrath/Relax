@@ -65,7 +65,7 @@ Installation
 
 Latest versions:
 
-[Beta 4](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tE0000000HWiT)
+[Beta 5](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tE0000000HeLw)
 
 
 Unit Tests

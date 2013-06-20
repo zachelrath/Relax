@@ -26,6 +26,7 @@ public with sharing class JobEditController {
 
     public JobEditController(ApexPages.StandardController ctl) {
         job = (Job__c) ctl.getRecord();
+        /*
         getSchedulableClassOptions();
         getAsyncProcessStepClassOptions();
         
@@ -47,6 +48,7 @@ public with sharing class JobEditController {
         		asyncProcessStepClassName = asyncProcessStepClassOptions[0].getValue();
         	}   
         }
+        */
     }
     
     // On Save, send the user to the Tab for Jobs
@@ -65,7 +67,7 @@ public with sharing class JobEditController {
     	return new PageReference('/' + Job__c.SObjectType.getDescribe().getKeyPrefix());
     }
      
-    
+    /*
     // Return a list of all Apex class choices 
     private transient List<ApexClass> allApexClasses;
     public List<ApexClass> getAllApexClasses() {    
@@ -188,19 +190,11 @@ public with sharing class JobEditController {
         
     }
     
+    */
+    
     ///////////////////////
     // UNIT TESTS (of JobEditController and Job trigger)
     ///////////////////////
-    
-    
-    //
-    // TODO: make sure none of these tests will break anyone's build when they run tests post- install!!!!
-    //
-    
-    private static testMethod void TODO() {
-    	
-    	System.assert(false,'TODO: Make sure none of these tests break anyones builds');
-    }
     
     
     private static testMethod void TestIndividuallyScheduledJob() {
@@ -211,6 +205,7 @@ public with sharing class JobEditController {
     	Test.setCurrentPage(System.Page.EditJob);
     	System.assertEquals(false,ApexPages.hasMessages());
     	
+    	/*
     	// We should have non-null lists of schedulable and aggregable class options
     	List<ApexClass> classes = ctl.getAllApexClasses();
     	List<SelectOption> aggregables = ctl.getAsyncProcessStepClassOptions();
@@ -218,6 +213,7 @@ public with sharing class JobEditController {
     	System.assertNotEquals(null,classes);
     	System.assertNotEquals(null,aggregables);
     	System.assertNotEquals(null,schedulables);
+    	*/
     	
     	// Schedule an individual job
     	j = ctl.job;
@@ -270,9 +266,11 @@ public with sharing class JobEditController {
     	Test.setCurrentPage(System.Page.EditJob);
     	System.assertEquals(false,ApexPages.hasMessages());
     	
+    	/*
     	// We should have non-null lists of schedulable and aggregable class options
     	List<SelectOption> aggregables = ctl.getAsyncProcessStepClassOptions();
     	System.assertNotEquals(null,aggregables);
+    	*/
     	
     	// Schedule an aggregable job --- we should get an error because no class has been specified
     	j = ctl.job;

@@ -37,9 +37,19 @@
 		        	<apex:inputField value="{!Job__c.Cron_Schedule__c}"/>
 			        <apex:pageBlockSectionItem >
 			            <apex:outputLabel value="Schedulable Apex Class"/>
+			            <!-- 
 			            <apex:selectList multiselect="false" size="1" value="{!schedulableClassName}" required="{!runSolo}">
 			                <apex:selectOptions value="{!schedulableClassOptions}"/>
 			            </apex:selectList>
+			             -->
+			            <apex:inputText value="{!schedulableClassName}" id="schedulableClassLookup">
+		                	<!--  Makes the above textbox an AutoComplete lookup on the ApexClass object -->
+					        <c:apexClassLookup interfaceClassMustImplement="Schedulable" 
+					        	textboxId="schedulableClassLookup"
+					            fieldsToSearch="Name,NamespacePrefix"
+					            fieldsToReturn="Name,NamespacePrefix"
+					            displayTemplate="{{#NamespacePrefix}}{{NamespacePrefix}}.{{/NamespacePrefix}}{{Name}}"/>
+		                </apex:inputText>
 			        </apex:pageBlockSectionItem>
 			    </apex:pageBlockSection>
 	        </apex:pageBlock>
@@ -48,9 +58,19 @@
 	        	<apex:pageBlockSection title="Select Apex Class" columns="1" collapsible="false">
 		        	<apex:pageBlockSectionItem >
 		                <apex:outputLabel value="Aggregable Apex Class"/>
+		                <apex:inputText value="{!asyncProcessStepClassName}" id="asyncClassLookup">
+		                	<!--  Makes the above textbox an AutoComplete lookup on the ApexClass object -->
+					        <c:apexClassLookup interfaceClassMustImplement="ProcessStep" 
+					        	textboxId="asyncClassLookup"
+					            fieldsToSearch="Name,NamespacePrefix"
+					            fieldsToReturn="Name,NamespacePrefix"
+					            displayTemplate="{{#NamespacePrefix}}{{NamespacePrefix}}.{{/NamespacePrefix}}{{Name}}"/>
+		                </apex:inputText>
+		                <!-- 
 		                <apex:selectList multiselect="false" size="1" value="{!asyncProcessStepClassName}" required="{!NOT(runSolo)}">
 		                    <apex:selectOptions value="{!asyncProcessStepClassOptions}"/>
 		                </apex:selectList>
+		                -->
 		            </apex:pageBlockSectionItem>
 		        </apex:pageBlockSection>
 		        <apex:pageBlockSection title="Job Frequency" columns="2" collapsible="false">
