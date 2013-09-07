@@ -194,53 +194,5 @@ public with sharing class JSR {
         }
    		return parts;
 	} 
-
-    
-	/////////////////
-	// UNIT TESTS
-	/////////////////
-	
-	private static testMethod void TestQueryApexClasses() {
-		
-   		// Query the ApexClass object 
-   		List<ApexClass> classes = JSR.queryApexClasses(
-   			null,
-   			'JobEditController',
-   			null,
-   			null
-   		);
-   		
-   		// Verify that we returned at least one record
-   		System.assert(classes.size() >= 1);
-   		
-   		// Add in some search and return fields
-   		 classes = JSR.queryApexClasses(
-   			null,
-   			'relax.JobEditController',
-   			'NamespacePrefix',
-   			'NamespacePrefix'
-   		);
-   		System.assert(classes.size() >= 1);
-   		
-   		// Find a schedulable class
-   		// Add in some search and return fields
-   		 classes = JSR.queryApexClasses(
-   			'Schedulable',
-   			'relax ProcessBalloon',
-   			'NamespacePrefix',
-   			'NamespacePrefix'
-   		);
-   		System.assert(classes.size() >= 1);
-   		
-   		// Find an Aggregable class (one that implements relax.Process)
-   		 classes = JSR.queryApexClasses(
-   			'ProcessStep',
-   			'SwapSLAs rel',
-   			'Name,NamespacePrefix',
-   			'Name,NamespacePrefix'
-   		);
-   		
-   		
-	}
    
 } // end class

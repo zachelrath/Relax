@@ -1,6 +1,7 @@
 global class BatchAccountsUpdater extends BatchableProcessStep implements Schedulable {
 
 	global override Database.Querylocator start(Database.BatchableContext btx) {
+		
 		// Insert an SObject just to test that it's possible
 		Account a = new Account(
 			Name = 'Extravagant Account ' + String.valueOf(Datetime.now().getTime())

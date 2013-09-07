@@ -7,6 +7,10 @@ global virtual class BatchableRunnable implements Runnable, Database.Stateful {
 		setJob(job);
 	}
 	
+	global Job__c getJob() {
+		return this.job;
+	}
+	
 	global void setJob(Job__c j) {
 		this.job = j;
 	}

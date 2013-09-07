@@ -4,6 +4,8 @@ global virtual interface Runnable {
 	void setProcess(Process p);
 	// Set the Job that this Runnable is related to
 	void setJob(Job__c j);
+	// Get the Job that this Runnable is related to
+	Job__c getJob();
 	// Run this item
 	void run();
 	// Clean up after and complete the Runnable

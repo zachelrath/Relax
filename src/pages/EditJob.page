@@ -15,10 +15,10 @@
             </apex:pageBlockButtons>
         
             <apex:pageBlockSection showHeader="false" columns="2">
-                <apex:inputField value="{!Job__c.Name}" required="true"/>
+                <apex:inputField value="{!Job__c.Name}" required="true" style="width: 300px;"/>
                 <apex:inputField value="{!Job__c.IsActive__c}"/>
                 <apex:pageBlockSectionItem >
-                	<apex:outputLabel value="Should this Job be run individually?"/>
+                	<apex:outputLabel value="Should this Job be scheduled individually, as its own Apex job?"/>
                 	<apex:inputField value="{!Job__c.Run_Individually__c}">
                 		<apex:actionSupport event="onchange" rerender="step1,jobDetails,pageMessages,jobStatus"/>
                 	</apex:inputField>
@@ -42,7 +42,7 @@
 			                <apex:selectOptions value="{!schedulableClassOptions}"/>
 			            </apex:selectList>
 			             -->
-			            <apex:inputText value="{!schedulableClassName}" id="schedulableClassLookup">
+			            <apex:inputText value="{!schedulableClassName}" id="schedulableClassLookup" style="width: 300px;">
 		                	<!--  Makes the above textbox an AutoComplete lookup on the ApexClass object -->
 					        <c:apexClassLookup interfaceClassMustImplement="Schedulable" 
 					        	textboxId="schedulableClassLookup"
@@ -55,10 +55,10 @@
 	        </apex:pageBlock>
 	        
 	        <apex:pageBlock title="Aggregable Job Details" rendered="{!NOT(runSolo)}" id="aggregableJobDetails">
-	        	<apex:pageBlockSection title="Select Apex Class" columns="1" collapsible="false">
+	        	<apex:pageBlockSection title="Select Apex Class and set parameters" columns="1" collapsible="false">
 		        	<apex:pageBlockSectionItem >
 		                <apex:outputLabel value="Aggregable Apex Class"/>
-		                <apex:inputText value="{!asyncProcessStepClassName}" id="asyncClassLookup">
+		                <apex:inputText value="{!asyncProcessStepClassName}" id="asyncClassLookup" style="width: 300px;">
 		                	<!--  Makes the above textbox an AutoComplete lookup on the ApexClass object -->
 					        <c:apexClassLookup interfaceClassMustImplement="ProcessStep" 
 					        	textboxId="asyncClassLookup"
@@ -72,6 +72,7 @@
 		                </apex:selectList>
 		                -->
 		            </apex:pageBlockSectionItem>
+		            <apex:inputField value="{!Job__c.Parameters__c}" style="width: 300px;"/>
 		        </apex:pageBlockSection>
 		        <apex:pageBlockSection title="Job Frequency" columns="2" collapsible="false">
 		            <apex:inputField value="{!Job__c.Run_Increment__c}" required="{!NOT(runSolo)}"/>

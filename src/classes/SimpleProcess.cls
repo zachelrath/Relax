@@ -102,7 +102,7 @@ global virtual class SimpleProcess implements Process {
 				JobScheduler.SendEmailOnException(ex,
 					'Exception during step ' + index + ' of Relax Process ' + triggerId,
 					// Get the system admin's email address
-					[select Email from User where Id = :UserInfo.getUserId() limit 1].Email
+					UserInfo.getUserEmail()
 				);
 				
 				// Finish the process!

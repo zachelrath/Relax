@@ -26,29 +26,15 @@ public with sharing class JobEditController {
 
     public JobEditController(ApexPages.StandardController ctl) {
         job = (Job__c) ctl.getRecord();
-        /*
-        getSchedulableClassOptions();
-        getAsyncProcessStepClassOptions();
         
-        if (!schedulableClassOptions.isEmpty()) {
-        	// Are we updating an existing INDIVIDUALLY-scheduled Job?
-        	// If so, attempt to find that job in our list of options.
-        	if (job.Run_Individually__c && (job.Apex_Class__c != null)) {
-        		schedulableClassName = job.Apex_Class__c;
-        	} else {
-        		schedulableClassName = schedulableClassOptions[0].getValue();
-        	}
+        // Are we updating an existing INDIVIDUALLY-scheduled Job?
+    	if (job.Run_Individually__c && (job.Apex_Class__c != null)) {
+    		schedulableClassName = job.Apex_Class__c;
+    	} 
+    	// Are we updating an existing AGGREGABLE Job?
+    	else if (!job.Run_Individually__c && (job.Apex_Class__c != null)) {
+        	asyncProcessStepClassName = job.Apex_Class__c;
         }
-        if (!asyncProcessStepClassOptions.isEmpty()) {
-            // Are we updating an existing AGGREGABLE Job?
-        	// If so, attempt to find that job in our list of options.
-        	if (!job.Run_Individually__c && (job.Apex_Class__c != null)) {
-        		asyncProcessStepClassName = job.Apex_Class__c;
-        	} else {
-        		asyncProcessStepClassName = asyncProcessStepClassOptions[0].getValue();
-        	}   
-        }
-        */
     }
     
     // On Save, send the user to the Tab for Jobs
@@ -254,10 +240,6 @@ public with sharing class JobEditController {
     	  
     }
     
-    //
-    // Commented out because we do not have any aggregable jobs pre-included in the relax package
-    //
-    /**/
     private static testMethod void TestAggregableJob() {
     	// Load up our page for a new Job record
     	Job__c j = new Job__c();
@@ -287,7 +269,7 @@ public with sharing class JobEditController {
     	System.assertEquals(true,ApexPages.hasMessages());
     	
     	// Try to create our job again after specifying a valid class name
-    	ctl.asyncProcessStepClassName = 'relax.BatchAccountsUpdater';
+    	ctl.asyncProcessStepClassName = 'relax.MassUpdate';
     	p = ctl.save();
     	
     	// Verify that our record saved
@@ -298,7 +280,7 @@ public with sharing class JobEditController {
     		order by CreatedDate DESC limit 1
     	];
     	System.assertEquals(1,jobs.size());
-    	System.assertEquals('relax.BatchAccountsUpdater',jobs[0].Apex_Class__c);
+    	System.assertEquals('relax.MassUpdate',jobs[0].Apex_Class__c);
     	System.assertEquals(true,jobs[0].IsActive__c);
     	System.assertNotEquals(null,jobs[0].JobSchedulerId__c);
     	System.assertNotEquals(null,jobs[0].Next_Run__c);

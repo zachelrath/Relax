@@ -28,7 +28,7 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
 			// Find the email of the user who created the current CronTrigger record
 			try {
 				if (UserInfo.getUserId() != null) {
-					adminEmail = [select Email from User where Id = :UserInfo.getUserId() limit 1].Email;
+					adminEmail = UserInfo.getUserEmail();
 				} 
 				
 				//else if (newTriggerId != null) {
@@ -128,6 +128,10 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
 			this.runnables = new List<Runnable>();
 		}	
 		
+		Integer debug = [select	count()
+			from	Job__c
+			where	IsActive__c = true];
+		
         // Query for all active jobs
         return Database.getQueryLocator([
 			select	Id, Name, IsActive__c, Apex_Class__c, JobSchedulerId__c,
@@ -135,7 +139,8 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
 					Only_Run_Once__c, Delete_Job_After_Run__c,
 					Run_Increment__c, Run_Units__c,
 					Last_Run__c,Next_Run__c,
-					AsyncApexJobId__c, CronTriggerId__c
+					AsyncApexJobId__c, CronTriggerId__c,
+					Parameters__c
 			from	Job__c
 			where	IsActive__c = true
 			order by Order__c nulls last
@@ -569,7 +574,7 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
     }
     
     // Convenience method for quickly scheduling a one-time (temp) Job
-    global static Job__c CreateOneTimeJob(String className, Datetime runTime, boolean deleteAfterRun) {
+    global static Job__c CreateOneTimeJob(String className, Datetime runTime, boolean deleteAfterRun, String parameters) {
     	Job__c temp = new Job__c(
     		IsActive__c = true,
     		Run_Individually__c = false,
@@ -577,12 +582,17 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
     		Delete_Job_After_Run__c = deleteAfterRun,
     		Next_Run__c = runTime,
     		Apex_Class__c = className,
+    		Parameters__c = parameters,
     		Name = className + ' ' + runTime.getTime()
     	);
     	insert temp;
     	return temp;
     }
     
+    // Convenience method for quickly scheduling a one-time (temp) Job
+    global static Job__c CreateOneTimeJob(String className, Datetime runTime, boolean deleteAfterRun) {
+    	return CreateOneTimeJob(className, runTime, deleteAfterRun,null);
+    }
     // If Last Run is null,
 	// or if the difference between Last Run and NOW
 	// is greater than the run interval (the time between Next Run and NOW if Last Run = NOW),
@@ -623,8 +633,8 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         
         mail.setToAddresses(new List<String>{email});
-        mail.setReplyTo('noreply@skoodat.com');
-        mail.setSenderDisplayName('Skoodat Relax');
+        mail.setReplyTo('zach@skuidify.com');
+        mail.setSenderDisplayName('Relax');
         mail.setSubject(subject);
         mail.setPlainTextBody(htmlBody);
         mail.setHtmlBody(textBody);
@@ -648,7 +658,7 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
     }
     
     // Return a CRON Expression corresponding to a Datetime
-	public static String GetCRONExpression(Datetime dt) {
+	global static String GetCRONExpression(Datetime dt) {
 		return ('' + dt.second() + ' ' + dt.minute() + ' ' + dt.hour() + ' ' + dt.day() + ' ' + dt.month() + ' ? ' + dt.year());
 	}
 

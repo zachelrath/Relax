@@ -1,5 +1,5 @@
 //
-// Used to keep Nexus processes 'afloat' asynchronously
+// Used to keep Relax processes 'afloat' asynchronously
 //
 
 public class ProcessBalloon implements Schedulable, Database.Stateful {
