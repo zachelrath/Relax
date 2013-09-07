@@ -168,7 +168,7 @@ Here are all supported Relax operation modes:
       "valuesByField":{
          "Priority":"Critical",
          "IsEscalated":true
-      }
+       }
     }
     
  - `FIELD_FROM_FIELD` mode: for each row, copies the value of a source field into a target field. Example: copies the value of the OwnerId field of each Opportunity into a custom Owner2__c field:
@@ -182,7 +182,7 @@ Here are all supported Relax operation modes:
  
  - `FIELDS_FROM_FIELDS` mode: same as Field from Field, but for multiple source-to-target field pairings: Example: 
  
-     {
+    {
       "mode":"FIELDS_FROM_FIELDS",
       "query":"select OwnerId, Owner2__c, CloseMonthFormula__c, CloseMonth__c from Opportunity",
       "sourceFieldsByTargetField":{
