@@ -162,34 +162,34 @@ Here are all supported Relax operation modes:
  
  - `FIELDS_WITH_VALUES` mode: updates a set of fields with corresponding values. Example: finds all Cases that have been Open for over 30 days, and sets their Priority to Critical and Escalates them:
  
-    {
-      "mode":"FIELDS_WITH_VALUES",
-      "query":"select Priority, IsEscalated from Case where Status = 'Open' and CreatedDate < LAST_N_DAYS:30",
-      "valuesByField":{
-         "Priority":"Critical",
-         "IsEscalated":true
-       }
-    }
+			{
+			  "mode":"FIELDS_WITH_VALUES",
+			  "query":"select Priority, IsEscalated from Case where Status = 'Open' and CreatedDate < LAST_N_DAYS:30",
+			  "valuesByField":{
+				 "Priority":"Critical",
+				 "IsEscalated":true
+			   }
+			}
     
  - `FIELD_FROM_FIELD` mode: for each row, copies the value of a source field into a target field. Example: copies the value of the OwnerId field of each Opportunity into a custom Owner2__c field:
  
-    {
-      "mode":"FIELD_FROM_FIELD",
-      "query":"select OwnerId, Owner2__c from Opportunity where Owner2__c = null",
-      "sourceField":"OwnerId",
-      "targetField":"Owner2__c"
-    }    
+			{
+			  "mode":"FIELD_FROM_FIELD",
+			  "query":"select OwnerId, Owner2__c from Opportunity where Owner2__c = null",
+			  "sourceField":"OwnerId",
+			  "targetField":"Owner2__c"
+			}    
  
  - `FIELDS_FROM_FIELDS` mode: same as Field from Field, but for multiple source-to-target field pairings: Example: 
  
-    {
-      "mode":"FIELDS_FROM_FIELDS",
-      "query":"select OwnerId, Owner2__c, CloseMonthFormula__c, CloseMonth__c from Opportunity",
-      "sourceFieldsByTargetField":{
-         "CloseMonth__c":"CloseMonthFormula__c",
-         "Owner2__c":"OwnerId"
-      }
-    }    
+			{
+			  "mode":"FIELDS_FROM_FIELDS",
+			  "query":"select OwnerId, Owner2__c, CloseMonthFormula__c, CloseMonth__c from Opportunity",
+			  "sourceFieldsByTargetField":{
+				 "CloseMonth__c":"CloseMonthFormula__c",
+				 "Owner2__c":"OwnerId"
+			  }
+			}    
 
 Support / Contributing
 ------------
