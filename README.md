@@ -21,14 +21,14 @@ Installation
 
 Latest versions:
 
-[v1.1](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tE0000000ISIu)
+[v1.2 - released  9/9/2013](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tE0000000ISJ4)
 
 
 
 Using Relax
 ------------
 
-Relax is available as a managed *released* package (coming to AppExchange before Dreamforce 2013!), click [here](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tE0000000ISIu) to install v1.1. now!
+Relax is available as a managed *released* package (coming to AppExchange before Dreamforce 2013!), click [here](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tE0000000ISJ4) to install v1.2. now!
 
 There are several sample Batch / Scheduled Apex classes that work with the Relax framework included in the src/classes directory. MassUpdate.cls and MassDelete.cls are included in the Relax managed package, while BatchAccountsUpdater.cls and CaseEscalator.cls are just some other examples:
 

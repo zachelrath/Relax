@@ -104,6 +104,8 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
 			}	
 		}
 		
+		this.runnables = new List<Runnable>();
+		
 		// First of all, check to see whether there are ANY active jobs.
 		List<Job__c> activeJobs = [
 			select Id from Job__c where IsActive__c = true limit 1
@@ -124,8 +126,6 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
 			} catch (Exception ex) {
 				SendEmailOnException(ex, 'Could not perpetuate Job Scheduler Process', getAdminEmail());
 			}
-			
-			this.runnables = new List<Runnable>();
 		}	
 		
 		Integer debug = [select	count()
@@ -309,7 +309,7 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
 		IsBatch = true;
 		
 		// If we have runnables, we need to build a Process, and then get it going 
-		if (!runnables.isEmpty()) {
+		if ((runnables != null) && !runnables.isEmpty()) {
 			// Instantiate a new process
 			Process p = new SimpleProcess(runnables,newTriggerId);
 			// Associate our JobScheduler with this Process
@@ -617,9 +617,14 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
             t = System.Type.forName(name);
         } catch (Exception exc) {
         	try {
+        		// If we are trying to find a Type in a local org with no defined namespace,
+        		// then we have to use a different Type.forName() syntax.
+        		// See www.salesforce.com/us/developer/docs/apexcode/Content/apex_methods_system_type.htm 
+	        	if (!name.contains('.')) {
+	        		t = System.Type.forName(null,name);
+	        	} else {
                 // attempt to strip off a namespace prefix from our class name,
                 // and try again. If we fail the 2nd time, then we seriously failed.
-            	if (name.contains('.')) {
             		String sansNamespace = name.substring(name.indexOf('.')+1);
             		t = System.Type.forName(sansNamespace);
             	}
