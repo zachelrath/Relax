@@ -613,6 +613,19 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
     public static System.Type GetTypeForClassName(String name) {
         System.Type t;
         
+        // Try all sorts of permutations and send a debug email with them
+        t = System.Type.forName(name);
+        
+        if ((t == null) && (!name.contains('.'))) {
+	        t = System.Type.forName(null,name);
+        }    
+        
+        if ((t == null) && (name.indexOf('.')!=-1)){
+	        String sansNamespace = name.substring(name.indexOf('.')+1);
+	        t = System.Type.forName(sansNamespace);
+        }
+        
+        /*
         try {
             t = System.Type.forName(name);
         } catch (Exception exc) {
@@ -630,6 +643,7 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
             	}
         	} catch (Exception exc2) {}
         }
+        */
 		return t;
     }
     
@@ -641,8 +655,8 @@ global class JobScheduler implements Schedulable, Database.Stateful, Database.Ba
         mail.setReplyTo('zach@skuidify.com');
         mail.setSenderDisplayName('Relax');
         mail.setSubject(subject);
-        mail.setPlainTextBody(htmlBody);
-        mail.setHtmlBody(textBody);
+        mail.setPlainTextBody(textBody);
+        mail.setHtmlBody(htmlBody);
         
         Messaging.reserveSingleEmailCapacity(1);
         
